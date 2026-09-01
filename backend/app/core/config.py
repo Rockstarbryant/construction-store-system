@@ -7,6 +7,7 @@ Never hard-code secrets here.
 from functools import lru_cache
 from typing import List
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -22,6 +23,27 @@ class Settings(BaseSettings):
     # --- Database ---
     # Prefer a full DATABASE_URL. Falls back to building one from parts.
     DATABASE_URL: str = "postgresql+psycopg://csuser:devpassword@localhost:5432/construction_store"
+
+    @field_validator("DATABASE_URL")
+    @classmethod
+    def _use_psycopg3_driver(cls, v: str) -> str:
+        """
+        Hosting providers (Render, Neon, Heroku-style URLs, etc.) commonly
+        hand out a bare `postgresql://...` or legacy `postgres://...`
+        connection string. SQLAlchemy treats an unqualified `postgresql://`
+        scheme as "use psycopg2", but this project installs psycopg (v3)
+        instead - so without this normalization, deploys fail at runtime
+        with `ModuleNotFoundError: No module named 'psycopg2'` even though
+        the app works fine locally with an explicit `+psycopg` URL.
+        Rewriting the scheme here means any connection string pasted
+        as-is from a provider's dashboard just works, no manual editing
+        required.
+        """
+        if v.startswith("postgres://"):
+            v = "postgresql://" + v[len("postgres://") :]
+        if v.startswith("postgresql://"):
+            v = "postgresql+psycopg://" + v[len("postgresql://") :]
+        return v
 
     # --- Security / JWT ---
     SECRET_KEY: str = "CHANGE_ME_IN_PRODUCTION_this_is_a_dev_only_default_key"
