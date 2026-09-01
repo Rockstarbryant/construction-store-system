@@ -52,7 +52,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
 
     # --- CORS ---
-    CORS_ORIGINS: List[str] = ["http://localhost:3000"]
+    CORS_ORIGINS: List[str] = ["https://storerecords.vercel.app"]
 
     # --- Timezone ---
     # All timestamps are stored in UTC. This is the display timezone only.
