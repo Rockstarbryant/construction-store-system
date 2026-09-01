@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/600.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+:root {
+  --color-concrete: #ede9e1;
+  --color-concrete-dim: #ded8cc;
+  --color-panel: #f7f5f0;
+  --color-ink: #201d19;
+  --color-ink-soft: #5c564d;
+  --color-steel: #3c4a56;
+  --color-steel-dark: #2a343d;
+  --color-amber: #d98e2b;
+  --color-amber-dark: #a86e1f;
+  --color-rust: #b1402a;
+  --color-moss: #45704a;
+  --color-line: #cdc6b7;
+}
+
+@theme inline {
+  --color-concrete: var(--color-concrete);
+  --color-concrete-dim: var(--color-concrete-dim);
+  --color-panel: var(--color-panel);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-steel: var(--color-steel);
+  --color-steel-dark: var(--color-steel-dark);
+  --color-amber: var(--color-amber);
+  --color-amber-dark: var(--color-amber-dark);
+  --color-rust: var(--color-rust);
+  --color-moss: var(--color-moss);
+  --color-line: var(--color-line);
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  background: var(--color-concrete);
+}
+
+body {
+  background: var(--color-concrete);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  min-height: 100dvh;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.font-data {
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-steel);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
